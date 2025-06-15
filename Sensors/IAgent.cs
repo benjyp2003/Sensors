@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Sensors
 {
-    internal class Agent
+    internal interface IAgent
     {
-        public string Name { get; }
+        string Name { get; }
         string Rank { get; }
-        public Agent() { }
+        ISensor[] SensitiveSensors { get; } 
+        ISensor[] SensorsSlots { get; } 
+
     }
 }
