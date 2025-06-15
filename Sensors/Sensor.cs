@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sensors
 {
-    internal class Sensor
+    internal class Sensor : ISensor
     {
         public string Name {  get; }
-        string Action { get; }  
-        public Sensor(string name, string action)
+        public Sensor(string name)
         {
             Name = name;
-            Action = action;
+        }
+
+        public void Activate()
+        {
+            Console.WriteLine($"The sensor {Name} was activated.");
         }
     }
 }
