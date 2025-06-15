@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Sensors
 {
-    internal class Sensor : ISensor
+    internal class AudioSensor : ISensor
     {
         public string Name {  get; }
-        public Sensor(string name)
+        public AudioSensor()
         {
-            Name = name;
+            Name = "Sony Microphone";
         }
 
         public void Activate()

@@ -9,7 +9,10 @@ namespace Sensors
     internal interface IAgent
     {
         string Name { get; }
-        string Rank { get; }
+        /// <summary>
+        /// Agents rank 2 - 5, Where 5 is the highest rank and 2 is the lowest.
+        /// </summary>
+        int Rank { get; }
         ISensor[] SensitiveSensors { get; } 
         ISensor[] SensorsSlots { get; } 
 
