@@ -13,11 +13,17 @@ namespace Sensors
         public AudioSensor(string name)
         {
             Name = name;
+            AddToVaulte();
         }
 
         public void Activate()
         {
-            Console.WriteLine($"The sensor {Name} was activated.");
+            Console.WriteLine($"The sensor '{Name}' was activated.");
+        }
+
+        public void AddToVaulte()
+        {
+            SensorsVaulte.AddSensorToList( this );
         }
     }
 }

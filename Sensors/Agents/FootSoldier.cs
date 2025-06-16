@@ -8,13 +8,15 @@ namespace Sensors
 {
     internal class FootSoldier : Agent
     {
+        protected override ISensor[] SensitiveSensors { get; set; } 
+        protected override ISensor[] SensorSlots { get; set; }
 
-        public FootSoldier(string name) 
+        public FootSoldier(string name) : base()
         {
             Name = name;
             Rank = Sensors.Rank.FootSoldier;
             SensitiveSensors = SensorsVaulte.GetRandomSensors(2).ToArray();
-            SensitiveSensors = new ISensor[2];
+            SensorSlots = new ISensor[2];
         }
 
         

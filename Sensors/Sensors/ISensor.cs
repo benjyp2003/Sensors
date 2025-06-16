@@ -10,5 +10,7 @@ namespace Sensors
     {
         string Name { get; }
         void Activate();
+
+        void AddToVaulte();
     }
 }

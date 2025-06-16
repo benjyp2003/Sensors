@@ -1,5 +1,4 @@
-﻿using Sensors.Agents;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +8,21 @@ namespace Sensors
 {
     internal abstract class Agent 
     {
-        protected string Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Agents rank 2 - 5, Where 5 is the highest rank and 2 is the lowest.
         /// </summary>
-        protected Rank Rank { get; set; }
-        protected ISensor[] SensitiveSensors { get; set; }
-        protected ISensor[] SensorSlots { get; set; }
+        public Rank Rank { get; set; }
+        protected abstract ISensor[] SensitiveSensors { get; set; }
+        protected abstract ISensor[] SensorSlots { get; set; }
         
         protected int successfulMatches = 0;
+        public bool IsExposed => successfulMatches >= SensitiveSensors.Length;
+
+        protected Agent()
+        {
+            Prison.Instance.AddAgentToList(this);
+        }
 
         /// <summary>
         /// Gets a sensor and trys to match it to the SensitiveSensors array.
@@ -32,7 +37,7 @@ namespace Sensors
                 Console.WriteLine("All sensor slots are already filled. \n");
                 return;
             }
-
+            
             // Check each SensitiveSensor
             for (int i = 0; i < SensitiveSensors.Length; i++)
             {

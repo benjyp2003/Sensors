@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Agents\FootSoldier.cs" />
     <Compile Include="Agents\Agent.cs" />
-    <Compile Include="Agents\IAgent.cs" />
+    <Compile Include="Agents\Prison.cs" />
     <Compile Include="Services\InvestigationManager.cs" />
     <Compile Include="Sensors\ISensor.cs" />
     <Compile Include="Program.cs" />
@@ -53,6 +53,8 @@
     <Compile Include="Sensors\AudioSensor.cs" />
     <Compile Include="Agents\Rank.cs" />
     <Compile Include="Sensors\SensorsVaulte.cs" />
+    <Compile Include="Services\Menu.cs" />
+    <Compile Include="Services\SensorVaulteManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
