@@ -13,7 +13,7 @@ namespace Sensors
     /// </summary>
     internal class SensorsVaulte
     {
-        static public SensorsVaulte Instance = null;
+        static SensorsVaulte Instance = null;
 
         static public List<ISensor> Sensors = new List<ISensor>();
 
@@ -41,13 +41,13 @@ namespace Sensors
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<ISensor> GetRandomSensors(int count)
+        public static List<ISensor> GetRandomSensors(int count)
         {
             Random random = new Random();
             List<ISensor> newSensors = new List<ISensor>();
             for (int i = 0; i < count; i++)
             {
-                newSensors.Add(Sensors[i]);
+                newSensors.Add(Sensors[random.Next(Sensors.Count-1)]);
             }
             return newSensors;
         }

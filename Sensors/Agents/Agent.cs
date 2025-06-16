@@ -1,0 +1,74 @@
+﻿using Sensors.Agents;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Sensors
+{
+    internal abstract class Agent 
+    {
+        protected string Name { get; set; }
+        /// <summary>
+        /// Agents rank 2 - 5, Where 5 is the highest rank and 2 is the lowest.
+        /// </summary>
+        protected Rank Rank { get; set; }
+        protected ISensor[] SensitiveSensors { get; set; }
+        protected ISensor[] SensorSlots { get; set; }
+        
+        protected int successfulMatches = 0;
+
+        /// <summary>
+        /// Gets a sensor and trys to match it to the SensitiveSensors array.
+        /// if manages to match activates the sensor.
+        /// </summary>
+        /// <param name="sensor"></param>
+        public virtual void TryMatchingSensor(ISensor sensor)
+        {
+            // Check if all slots are filled
+            if (successfulMatches >= SensitiveSensors.Length)
+            {
+                Console.WriteLine("All sensor slots are already filled. \n");
+                return;
+            }
+
+            // Check each SensitiveSensor
+            for (int i = 0; i < SensitiveSensors.Length; i++)
+            {
+                if (SensitiveSensors[i] != null && SensitiveSensors[i].Name == sensor.Name)
+                {
+                    // Check if the slot is not already filled
+                    if (SensorSlots[i] == null)
+                    {
+                        SensorSlots[i] = sensor;
+                        successfulMatches++;
+                        Console.WriteLine($"Sensor {sensor.Name} matched and placed in slot {i}. \n");
+
+                        ActivateSensor(sensor); // Activate the sensor
+
+                        // Print progress
+                        if (successfulMatches < SensitiveSensors.Length)
+                        {
+                            Console.WriteLine($"{successfulMatches}/{SensitiveSensors.Length} Found \n");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{successfulMatches}/{SensitiveSensors.Length} Agent Exposed! \n");
+                        }
+
+                        return;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Sensor {sensor.Name} did not match or its slot is already filled. \n");
+        }
+
+        // Activates the sensor
+        protected virtual void ActivateSensor(ISensor sensor)
+        {
+            sensor.Activate();
+        }
+    }
+}

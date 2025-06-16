@@ -10,9 +10,9 @@ namespace Sensors
     internal class AudioSensor : ISensor
     {
         public string Name {  get; }
-        public AudioSensor()
+        public AudioSensor(string name)
         {
-            Name = "Sony Microphone";
+            Name = name;
         }
 
         public void Activate()

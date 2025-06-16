@@ -10,6 +10,11 @@ namespace Sensors
     {
         static void Main(string[] args)
         {
+            FootSoldier footSoldier = new FootSoldier("Ahmed Tibi");
+            AudioSensor audioSensor1 = new AudioSensor("sony microphone");
+            AudioSensor audioSensor2 = new AudioSensor("Boze microphone");
+
+
         }
     }
 }
