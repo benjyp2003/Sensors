@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Agents\FootSoldier.cs" />
     <Compile Include="Agents\Agent.cs" />
+    <Compile Include="Agents\OrganizationLeader.cs" />
     <Compile Include="Agents\Prison.cs" />
     <Compile Include="Agents\SeniorCommander.cs" />
     <Compile Include="Sensors\PulseSensor.cs" />

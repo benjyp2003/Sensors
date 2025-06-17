@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Sensors.Agents
 {
-    internal class SeniorCommander : Agent
+    internal class OrganizationLeader : Agent
     {
         protected override ISensor[] SensitiveSensors { get; set; }
         protected override ISensor[] SensorSlots { get; set; }
 
-        public SeniorCommander(string name, string affiliation) : base()
+        public OrganizationLeader(string name, string affiliation) : base()
         {
             Name = name;
             Rank = Sensors.Rank.FootSoldier;
@@ -20,8 +19,8 @@ namespace Sensors.Agents
             AttackCounter = 0;
 
             // Initialize arrays
-            SensitiveSensors = new ISensor[6];
-            SensorSlots = new ISensor[6];
+            SensitiveSensors = new ISensor[8];
+            SensorSlots = new ISensor[8];
 
             // Get random sensors
             var randomSensors = SensorsVaulte.GetRandomSensors(4);
@@ -96,7 +95,7 @@ namespace Sensors.Agents
         protected override void ResetAllSensetiveSensors()
         {
             Array.Clear(SensitiveSensors, 0, SensitiveSensors.Length);
-            SensitiveSensors = SensorsVaulte.GetRandomSensors(6).ToArray();
+            SensitiveSensors = SensorsVaulte.GetRandomSensors(8).ToArray();
             Console.WriteLine("Reseted the SensitiveSensors array.");
         }
     }

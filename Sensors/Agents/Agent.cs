@@ -14,7 +14,9 @@ namespace Sensors
         /// </summary>
         public Rank Rank { get; set; }
 
-        protected int AttackCounter;
+        protected string Affiliation { get; set; }
+
+        protected int AttackCounter {  get; set; }
 
         protected abstract ISensor[] SensitiveSensors { get; set; }
         protected abstract ISensor[] SensorSlots { get; set; }
@@ -39,7 +41,7 @@ namespace Sensors
             if (AttackCounter >= 10)
             {
                 Console.WriteLine("You reached 10 attacks! \n");
-                ClearAllSensetiveSensors();
+                ResetAllSensetiveSensors();
                 ClearAllSensorsSlot();
                 return;
             }
@@ -108,10 +110,11 @@ namespace Sensors
             }
         }
 
-        protected virtual void ClearAllSensetiveSensors()
+        protected virtual void ResetAllSensetiveSensors()
         {
             Array.Clear(SensitiveSensors, 0, SensitiveSensors.Length);
-            Console.WriteLine("Cleard the SensitiveSensors array.");
+            SensitiveSensors = SensorsVaulte.GetRandomSensors(2).ToArray();
+            Console.WriteLine("Reseted the SensitiveSensors array.");
         }
 
         protected virtual void ClearAllSensorsSlot()

@@ -11,10 +11,11 @@ namespace Sensors
         protected override ISensor[] SensitiveSensors { get; set; }
         protected override ISensor[] SensorSlots { get; set; }
 
-        public SquadLeader(string name)
+        public SquadLeader(string name, string affiliation) : base()
         {
             Name = name;
             Rank = Sensors.Rank.FootSoldier;
+            Affiliation = affiliation;
             AttackCounter = 0;
 
             // Initialize arrays
@@ -43,7 +44,7 @@ namespace Sensors
             if (AttackCounter >= 10)
             {
                 Console.WriteLine("You reached 10 attacks! \n");
-                ClearAllSensetiveSensors();
+                ResetAllSensetiveSensors();
                 ClearAllSensorsSlot();
                 return;
             }
@@ -89,6 +90,13 @@ namespace Sensors
             }
 
             Console.WriteLine($"Sensor {sensor.Name} did not match or its slot is already filled. \n");
+        }
+
+        protected override void ResetAllSensetiveSensors()
+        {
+            Array.Clear(SensitiveSensors, 0, SensitiveSensors.Length);
+            SensitiveSensors = SensorsVaulte.GetRandomSensors(4).ToArray();
+            Console.WriteLine("Reseted the SensitiveSensors array.");
         }
     }
 }

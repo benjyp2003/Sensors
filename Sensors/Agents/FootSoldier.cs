@@ -11,10 +11,11 @@ namespace Sensors
         protected override ISensor[] SensitiveSensors { get; set; } 
         protected override ISensor[] SensorSlots { get; set; }
 
-        public FootSoldier(string name) : base()
+        public FootSoldier(string name, string affiliation) : base()
         {
             Name = name;
             Rank = Sensors.Rank.FootSoldier;
+            Affiliation = affiliation;
             
             // Initialize arrays
             SensitiveSensors = new ISensor[2];
