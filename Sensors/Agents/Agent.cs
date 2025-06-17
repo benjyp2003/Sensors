@@ -109,7 +109,7 @@ namespace Sensors
                     ShowSensitiveSensor();
                     break;
 
-                case 
+                case ""
             }
         }
 
