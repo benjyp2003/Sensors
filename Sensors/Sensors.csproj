@@ -46,6 +46,7 @@
     <Compile Include="Agents\FootSoldier.cs" />
     <Compile Include="Agents\Agent.cs" />
     <Compile Include="Agents\Prison.cs" />
+    <Compile Include="Agents\SeniorCommander.cs" />
     <Compile Include="Sensors\PulseSensor.cs" />
     <Compile Include="Services\InvestigationManager.cs" />
     <Compile Include="Sensors\ISensor.cs" />
