@@ -11,10 +11,10 @@ namespace Sensors
     /// A Static class that contains all the available sensors,
     /// and functions that returns wanted sensors.
     /// </summary>
-    internal static class SensorsVaulte
+    internal class SensorsVaulte
     {
 
-        static public List<ISensor> Sensors = new List<ISensor>();
+        static protected List<ISensor> Sensors = new List<ISensor>();
 
 
         /// <summary>
@@ -82,6 +82,11 @@ namespace Sensors
             return null;
         }
 
+        public static List<ISensor> GetAllSensors()
+        {
+            return Sensors;
+        }
+
         /// <summary>
         /// Show all the available Sensors.
         /// </summary>
@@ -99,7 +104,7 @@ namespace Sensors
         /// Returns all of the types of sensors in the sensor list.
         /// </summary>
         /// <returns></returns>
-        public static HashSet<Type> GetAllSensorTypes()
+        protected static HashSet<Type> GetAllSensorTypes()
         {
             HashSet<Type> typesOfSensors = new HashSet<Type>();
             for (int i = 0; i < SensorsVaulte.Sensors.Count; i++)
@@ -118,7 +123,7 @@ namespace Sensors
         {
             if (Sensors.Remove(sensor)) 
             {
-                Console.WriteLine($"{sensor} was removed successfully");
+                Console.WriteLine($"{sensor} was removed successfully from the Sensor List. \n");
             }
             else
             {

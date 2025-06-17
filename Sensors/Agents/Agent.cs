@@ -37,6 +37,12 @@ namespace Sensors
         /// <param name="sensor"></param>
         public virtual void TryMatchingSensor(ISensor sensor)
         {
+            if (IsExposed)
+            {
+                Console.WriteLine($"Agent {this.Name} Already exposed! \n");
+                return;
+            }
+
             AttackCounter++;
             if (AttackCounter >= 10)
             {
@@ -107,6 +113,7 @@ namespace Sensors
                 ISensor sensorToDelete = SensorSlots[rand];
                 Console.WriteLine($"Removing sensor '{sensorToDelete.Name}'.. \n");
                 SensorSlots[rand] = null;
+                successfulMatches--;
             }
         }
 
@@ -121,6 +128,7 @@ namespace Sensors
         {
             Array.Clear(SensorSlots, 0, SensorSlots.Length);
             Console.WriteLine("Cleard the SensorsSlot array.");
+            successfulMatches = 0;
         }
 
     }

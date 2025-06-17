@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sensors
 {
-    internal static class InvestigationManager
+    internal class InvestigationManager : SensorsVaulte
     {
         public static void Run()
         {
@@ -16,8 +16,8 @@ namespace Sensors
             AudioSensor sensor2 = new AudioSensor("Bose Microphone");
 
             // Initialize some agents
-            FootSoldier agent1 = new FootSoldier("Yosuf");
-            FootSoldier agent2 = new FootSoldier("Ahmed");
+            FootSoldier agent1 = new FootSoldier("Yosuf", "Iran");
+            FootSoldier agent2 = new FootSoldier("Ahmed", "Hamas");
 
             HandleMenuChoice();
         }
@@ -33,11 +33,11 @@ namespace Sensors
                 switch (choice)
                 {
                     case "1":
-                        SensorVaulteManager.HandleVaulteMenuChoice();
+                        MatchSensors();
                         break;
 
                     case "2":
-                        MatchSensors();
+                        SensorVaulteManager.HandleVaulteMenuChoice();
                         break;
 
                     case "3":
@@ -68,10 +68,10 @@ namespace Sensors
             }
             while (!agent.IsExposed)
             {
-                SensorsVaulte.ShowAllSensors();
-                Console.WriteLine("Choose the sensor you want to match:");
+                ShowAllSensors();
+                Console.WriteLine("\nChoose the sensor you want to match:");
                 string name = Console.ReadLine();
-                ISensor sensor = SensorsVaulte.GetSensorByName(name);
+                ISensor sensor = GetSensorByName(name);
                 if (sensor == null)
                 {
                     Console.WriteLine("Sensor not found!");

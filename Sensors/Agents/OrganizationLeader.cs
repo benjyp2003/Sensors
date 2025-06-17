@@ -50,7 +50,7 @@ namespace Sensors.Agents
             }
             if (AttackCounter == 3)
             {
-                RemoveRandomSensors(2);
+                RemoveFirstSensorFromSlot();
             }
 
             // Check if all slots are filled
@@ -92,11 +92,20 @@ namespace Sensors.Agents
             Console.WriteLine($"Sensor {sensor.Name} did not match or its slot is already filled. \n");
         }
 
+        protected void RemoveFirstSensorFromSlot()
+        {
+            if (SensorSlots[0]  != null)
+            {
+                SensorSlots[0] = null;
+                Console.WriteLine("Deleted first sensor in the sensor slot. \n");
+            }
+        }
+
         protected override void ResetAllSensetiveSensors()
         {
             Array.Clear(SensitiveSensors, 0, SensitiveSensors.Length);
             SensitiveSensors = SensorsVaulte.GetRandomSensors(8).ToArray();
-            Console.WriteLine("Reseted the SensitiveSensors array.");
+            Console.WriteLine("Reseted the SensitiveSensors array. \n");
         }
     }
 }

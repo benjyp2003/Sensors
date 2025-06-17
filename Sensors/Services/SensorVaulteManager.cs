@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sensors
 {
-    internal static class SensorVaulteManager
+    internal  class SensorVaulteManager : SensorsVaulte 
     {
         public static void HandleVaulteMenuChoice()
         {
@@ -62,7 +62,7 @@ namespace Sensors
 
         static void ShowTypes()
         {
-            Type[] typesOfSensors = SensorsVaulte.GetAllSensorTypes().ToArray();
+            Type[] typesOfSensors = GetAllSensorTypes().ToArray();
             Console.WriteLine("Sensor types: ");
             for (int i = 0; i < typesOfSensors.Length; i++)
             {
@@ -74,7 +74,7 @@ namespace Sensors
         {
             try
             {
-                Type[] typesOfSensors = SensorsVaulte.GetAllSensorTypes().ToArray();
+                Type[] typesOfSensors = GetAllSensorTypes().ToArray();
                 if (typesOfSensors.Length == 0)
                 {
                     Console.WriteLine("No sensor types available.");
@@ -110,11 +110,11 @@ namespace Sensors
         static void DeleteSensor()
         {
             string name = GetName();
-            foreach (var sensor in SensorsVaulte.Sensors)
+            foreach (var sensor in Sensors)
             {
                 if (sensor.Name == name)
                 {
-                    SensorsVaulte.DeleteSensor(sensor);
+                    DeleteSensor(sensor);
                     return;
                 }
             }

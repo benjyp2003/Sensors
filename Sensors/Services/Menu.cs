@@ -11,10 +11,10 @@ namespace Sensors
         public static void ShowMenu()
         {
             Console.WriteLine("┌──────────────────────────────────────────────┐");
-            Console.WriteLine("│              Investigation Menu               │");
+            Console.WriteLine("│              Investigation Menu              │");
             Console.WriteLine("├──────────────────────────────────────────────┤");
-            Console.WriteLine("│ 1. Manage Sensors                            │");
-            Console.WriteLine("│ 2. Investigate Agent                         │");
+            Console.WriteLine("│ 1. Investigate Agent                         │");
+            Console.WriteLine("│ 2. Manage Sensors                            │");
             Console.WriteLine("│ 3. Exit                                      │");
             Console.WriteLine("└──────────────────────────────────────────────┘");
         }
