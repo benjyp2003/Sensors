@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sensors
 {
-    internal class Program
+    internal enum Rank
     {
-        static void Main(string[] args)
-        {
+        FootSoldier = 2,
+        SquadLeader,
+        SeniorCommander,
+        OrganizationLeader
 
-            InvestigationManager.Run();
-
-        }
     }
 }

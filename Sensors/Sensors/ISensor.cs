@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sensors
 {
-    internal class Program
+    internal interface ISensor
     {
-        static void Main(string[] args)
-        {
+        string Name { get; }
+        void Activate();
 
-            InvestigationManager.Run();
-
-        }
+        void AddToVaulte();
     }
 }
