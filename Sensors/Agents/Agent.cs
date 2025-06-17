@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sensors.Sensors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,7 +83,6 @@ namespace Sensors
                         {
                             Console.WriteLine($"{successfulMatches}/{SensitiveSensors.Length} found, Agent Exposed! \n");
                         }
-
                         return;
                     }
                 }
@@ -98,7 +98,28 @@ namespace Sensors
         protected virtual void ActivateSensor(ISensor sensor)
         {
             sensor.Activate();
+            SpecialSensorActions(sensor);
         }
+
+        void SpecialSensorActions(ISensor sensor)
+        {
+            switch (sensor.GetType().Name)
+            {
+                case "ThermalSensor":
+                    ShowSensitiveSensor();
+                    break;
+
+                case 
+            }
+        }
+
+        void ShowSensitiveSensor()
+        {
+            Random random = new Random();
+            int randomIndex = random.Next(0, SensitiveSensors.Length);
+            Console.WriteLine($"Thermal sensor revealed the sensitive sensor - '{SensitiveSensors[randomIndex].Name}' \n");
+        }
+
 
         /// <summary>
         /// Remove a givin amount of random sensors.
