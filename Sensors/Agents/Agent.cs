@@ -119,11 +119,11 @@ namespace Sensors
                     break;
 
                 case "SignalSensor":
-                    
+                    ShowInfo(1);
                     break;
 
                 case "LightSensor":
-
+                    ShowInfo(2);
                     break;
 
             }
@@ -136,6 +136,21 @@ namespace Sensors
             Console.WriteLine($"Thermal sensor revealed the sensitive sensor - '{SensitiveSensors[randomIndex].Name}' \n");
         }
 
+        void ShowInfo(int numberOfFieldsToShow)
+        {
+            switch (numberOfFieldsToShow)
+            {
+                case 1:
+                    Console.WriteLine($"Signal Sensor revealed agents Rank '{this.Rank}'");
+                    break;
+
+                case 2:
+                    Console.WriteLine($"Light Sensor revealed Agents - \n" +
+                                      $"Rank: '{this.Rank}' \n" +
+                                      $"Affiliation: '{this.Affiliation}'");
+                    break;
+            }
+        }
 
         /// <summary>
         /// Remove a givin amount of random sensors.
