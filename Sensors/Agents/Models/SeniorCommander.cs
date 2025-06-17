@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Sensors;
 
-namespace Sensors.Agents
+namespace Agents.Models
 {
     internal class SeniorCommander : Agent
     {

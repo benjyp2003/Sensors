@@ -9,7 +9,6 @@ namespace Sensors.Sensors
     internal class ThermalSensor : ISensor 
     {
         public string Name { get; }
-        int ActivateCounter { get; set; }
 
         public ThermalSensor(string name)
         {

@@ -9,7 +9,6 @@ namespace Sensors.Agents
     internal class MagneticSensor : ISensor
     {
         public string Name { get; }
-        int ActivateCounter { get; set; }
 
         public MagneticSensor(string name)
         {

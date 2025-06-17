@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Sensors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sensors.Agents
+namespace Agents.Models
 {
     internal class OrganizationLeader : Agent
     {

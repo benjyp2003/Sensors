@@ -9,7 +9,6 @@ namespace Sensors.Agents
     internal class SignalSensor : ISensor
     {
         public string Name { get; }
-        int ActivateCounter { get; set; }
 
         public SignalSensor(string name)
         {
