@@ -75,16 +75,30 @@ namespace Sensors
             try
             {
                 Type[] typesOfSensors = SensorsVaulte.GetAllSensorTypes().ToArray();
-                Console.WriteLine("Choose what type of sensor you want: ");
-                int choice = Convert.ToInt32(Console.ReadLine());
-                for (int i = 1; i < typesOfSensors.Length+1; i++)
+                if (typesOfSensors.Length == 0)
                 {
-                    if (choice == i)
-                    {
-                        return typesOfSensors[i-1];
-                    }
+                    Console.WriteLine("No sensor types available.");
+                    return null;
                 }
-                Console.WriteLine("No types available.");
+                while (true)
+                {
+                    Console.WriteLine("Choose what type of sensor you want (enter number): ");
+                    string input = Console.ReadLine().Trim();
+
+                    if (!int.TryParse(input, out int choice))
+                    {
+                        Console.WriteLine("Please enter a valid number.");
+                        continue;
+                    }
+
+                    if (choice < 1 || choice > typesOfSensors.Length)
+                    {
+                        Console.WriteLine($"Please enter a number between 1 and {typesOfSensors.Length}.");
+                        continue;
+                    }
+                    return typesOfSensors[choice - 1];
+
+                }
             }
             catch (Exception ex)
             { 

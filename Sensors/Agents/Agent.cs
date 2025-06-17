@@ -48,7 +48,7 @@ namespace Sensors
                     {
                         SensorSlots[i] = sensor;
                         successfulMatches++;
-                        Console.WriteLine($"Sensor {sensor.Name} matched and placed in slot {i}. \n");
+                        Console.WriteLine($"\nSensor {sensor.Name} matched and placed in slot {i}. \n");
 
                         ActivateSensor(sensor); // Activate the sensor
 
@@ -59,7 +59,7 @@ namespace Sensors
                         }
                         else
                         {
-                            Console.WriteLine($"{successfulMatches}/{SensitiveSensors.Length} Agent Exposed! \n");
+                            Console.WriteLine($"{successfulMatches}/{SensitiveSensors.Length} found, Agent Exposed! \n");
                         }
 
                         return;

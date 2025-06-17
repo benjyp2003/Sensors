@@ -23,7 +23,20 @@ namespace Sensors
         /// <param name="sensor"></param>
         public static void AddSensorToList(ISensor sensor)
         {
+            if (sensor == null)
+            {
+                Console.WriteLine("Error: Cannot add null sensor to the vault.");
+                return;
+            }
+            
+            if (Sensors.Any(s => s.Name == sensor.Name))
+            {
+                Console.WriteLine($"Error: A sensor with name '{sensor.Name}' already exists in the vault.");
+                return;
+            }
+
             Sensors.Add(sensor);
+            Console.WriteLine($"Successfully added sensor '{sensor.Name}' to the vault.");
         }
 
 
@@ -52,9 +65,9 @@ namespace Sensors
 
                 return newSensors;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error: {e} in SensorVault.GetRandomSensors");
+                Console.WriteLine($"Error: {ex} in SensorVault.GetRandomSensors");
                 return new List<ISensor>();
             }
         }

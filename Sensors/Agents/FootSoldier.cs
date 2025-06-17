@@ -15,8 +15,25 @@ namespace Sensors
         {
             Name = name;
             Rank = Sensors.Rank.FootSoldier;
-            SensitiveSensors = SensorsVaulte.GetRandomSensors(2).ToArray();
+            
+            // Initialize arrays
+            SensitiveSensors = new ISensor[2];
             SensorSlots = new ISensor[2];
+            
+            // Get random sensors
+            var randomSensors = SensorsVaulte.GetRandomSensors(2);
+            if (randomSensors.Count > 0)
+            {
+                for (int i = 0; i < Math.Min(randomSensors.Count, 2); i++)
+                {
+                    SensitiveSensors[i] = randomSensors[i];
+                }
+
+            }
+            else
+            {
+                Console.WriteLine($"Warning: No sensors available for {name}. Agent will have no sensitive sensors.");
+            }
         }
 
         

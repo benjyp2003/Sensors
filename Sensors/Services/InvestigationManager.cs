@@ -11,17 +11,17 @@ namespace Sensors
     {
         public static void Run()
         {
-            // Initialize some agents
-            FootSoldier agent1 = new FootSoldier("Agent Smith");
-            FootSoldier agent2 = new FootSoldier("Agent Johnson");
-            
             // Initialize some sensors
             AudioSensor sensor1 = new AudioSensor("Sony Microphone");
             AudioSensor sensor2 = new AudioSensor("Bose Microphone");
-            
+
+            // Initialize some agents
+            FootSoldier agent1 = new FootSoldier("Yosuf");
+            FootSoldier agent2 = new FootSoldier("Ahmed");
+
             HandleMenuChoice();
         }
-        
+
         static void HandleMenuChoice()
         {
             while (true)
@@ -66,7 +66,6 @@ namespace Sensors
                 Console.WriteLine("Agent not found!");
                 return;
             }
-
             while (!agent.IsExposed)
             {
                 SensorsVaulte.ShowAllSensors();
