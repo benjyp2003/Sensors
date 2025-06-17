@@ -15,7 +15,7 @@ namespace Agents.Models
         public SquadLeader(string name, string affiliation) : base()
         {
             Name = name;
-            Rank = Sensors.Rank.FootSoldier;
+            Rank = Sensors.Rank.SquadLeader;
             Affiliation = affiliation;
             AttackCounter = 0;
 
@@ -47,11 +47,13 @@ namespace Agents.Models
                 Console.WriteLine("You reached 10 attacks! \n");
                 ResetAllSensetiveSensors();
                 ClearAllSensorsSlot();
+                ResetAttackCount();
                 return;
             }
             if (AttackCounter == 3)
             {
                 RemoveRandomSensors(1);
+                ResetAttackCount();
             }
 
             // Check if all slots are filled

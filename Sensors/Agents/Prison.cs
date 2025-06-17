@@ -10,7 +10,7 @@ namespace Sensors
     /// A Singleton class that contains all the available agents,
     /// and functions that returns wanted agents.
     /// </summary>
-    internal class Prison
+    internal class Prison 
     {
         static Prison _instance;
         List<Agent> _allAgents;
@@ -95,10 +95,10 @@ namespace Sensors
         /// </summary>
         public void ShowAllAgents()
         {
-            Console.WriteLine("The available Agents are: ");
+            Console.WriteLine("The available Agents for investigation are: ");
             foreach (var agent in _allAgents)
             {
-                Console.WriteLine($"'{agent.Name}' of type {agent.GetType().Name} with rank {agent.Rank}");
+                Console.WriteLine($"Aent '{agent.Name}'  Affiliated with {agent.Affiliation}, rank {agent.Rank}");
             }
             Console.WriteLine();
         }

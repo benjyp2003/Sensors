@@ -15,7 +15,7 @@ namespace Sensors
         /// </summary>
         public Rank Rank { get; set; }
 
-        protected string Affiliation { get; set; }
+        public string Affiliation { get; set; }
 
         protected int AttackCounter {  get; set; }
 
@@ -87,7 +87,7 @@ namespace Sensors
                     }
                 }
             }
-
+            Console.WriteLine();
             Console.WriteLine($"Sensor {sensor.Name} did not match or its slot is already filled. \n");
         }
 
@@ -114,8 +114,7 @@ namespace Sensors
                     break;
 
                 case "MagneticSensor":
-                    AttackCounter -= 2;
-                    if (AttackCounter < 0) AttackCounter = 0;
+                    AttackCounter -= 6;
                     break;
 
                 case "SignalSensor":
@@ -158,29 +157,62 @@ namespace Sensors
         /// <param name="num"></param>
         protected virtual void RemoveRandomSensors(int num)
         {
-            Random random = new Random();
-            for (int i = 0; i < num; i++)
+            try
             {
-                int rand = random.Next(SensorSlots.Length);
-                ISensor sensorToDelete = SensorSlots[rand];
-                Console.WriteLine($"Removing sensor '{sensorToDelete.Name}'.. \n");
-                SensorSlots[rand] = null;
-                successfulMatches--;
+                Random random = new Random();
+                List<int> nonNullIndexes = new List<int>();
+                Console.WriteLine($"You tried 3 Times, Removing {num} random Sensor");
+
+                for (int i = 0; i < SensorSlots.Length; i++)
+                {
+                    if (SensorSlots[i] != null)
+                    { nonNullIndexes.Add(i); }
+                }
+                if (nonNullIndexes.Count == 0)
+                {
+                    Console.WriteLine("No Sensors to Remove.\n");
+                    return;
+                }
+                for (int i = 0; i < num; i++)
+                {
+                    int rand = random.Next(nonNullIndexes.Count);
+                    int slotIndex = nonNullIndexes[rand];
+                    ISensor sensorToDelete = SensorSlots[slotIndex];
+
+                    Console.WriteLine($"Removing sensor '{sensorToDelete.Name}'..\n");
+                    SensorSlots[slotIndex] = null; 
+                    successfulMatches--;
+
+                    nonNullIndexes.RemoveAt(rand); // Optionally avoid duplicate removal
+                    if (nonNullIndexes.Count == 0)
+                    { 
+                        if (i < num)
+                        { Console.WriteLine("No more Sensors to delete. \n"); }
+                        break; 
+                    }
+                }
             }
+            catch (Exception ex)
+            { Console.WriteLine($"{ex}"); }
         }
 
         protected virtual void ResetAllSensetiveSensors()
         {
             Array.Clear(SensitiveSensors, 0, SensitiveSensors.Length);
             SensitiveSensors = SensorsVaulte.GetRandomSensors(2).ToArray();
-            Console.WriteLine("Reseted the SensitiveSensors array.");
+            Console.WriteLine("Reseted the SensitiveSensors array. \n");
         }
 
         protected virtual void ClearAllSensorsSlot()
         {
             Array.Clear(SensorSlots, 0, SensorSlots.Length);
-            Console.WriteLine("Cleard the SensorsSlot array.");
+            Console.WriteLine("Cleard the SensorsSlot array. \n");
             successfulMatches = 0;
+        }
+
+        protected void ResetAttackCount()
+        {
+            AttackCounter = 0;
         }
 
     }

@@ -92,7 +92,7 @@ namespace Sensors
         /// </summary>
         public static void ShowAllSensors()
         {
-            Console.WriteLine("The available Sensors are: ");
+            Console.WriteLine("\nThe available Sensors are: ");
             foreach (var sensor in Sensors)
             {
                 Console.WriteLine($"'{sensor.Name}' of type {sensor.GetType().Name}");

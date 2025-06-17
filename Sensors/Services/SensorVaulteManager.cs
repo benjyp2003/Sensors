@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sensors
 {
-    internal  class SensorVaulteManager : SensorsVaulte 
+    internal class SensorVaulteManager : SensorsVaulte 
     {
         public static void HandleVaulteMenuChoice()
         {
