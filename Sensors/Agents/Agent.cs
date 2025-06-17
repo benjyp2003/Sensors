@@ -101,6 +101,10 @@ namespace Sensors
             SpecialSensorActions(sensor);
         }
 
+        /// <summary>
+        /// Checks if the givin sensor is a special type sensor.
+        /// </summary>
+        /// <param name="sensor"></param>
         void SpecialSensorActions(ISensor sensor)
         {
             switch (sensor.GetType().Name)
@@ -109,7 +113,19 @@ namespace Sensors
                     ShowSensitiveSensor();
                     break;
 
-                case ""
+                case "MagneticSensor":
+                    AttackCounter -= 2;
+                    if (AttackCounter < 0) AttackCounter = 0;
+                    break;
+
+                case "SignalSensor":
+                    
+                    break;
+
+                case "LightSensor":
+
+                    break;
+
             }
         }
 
