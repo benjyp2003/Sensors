@@ -46,7 +46,7 @@
     <Compile Include="Agents\FootSoldier.cs" />
     <Compile Include="Agents\Agent.cs" />
     <Compile Include="Agents\Prison.cs" />
-    <Compile Include="PulseSensor.cs" />
+    <Compile Include="Sensors\PulseSensor.cs" />
     <Compile Include="Services\InvestigationManager.cs" />
     <Compile Include="Sensors\ISensor.cs" />
     <Compile Include="Program.cs" />
@@ -56,6 +56,7 @@
     <Compile Include="Sensors\SensorsVaulte.cs" />
     <Compile Include="Services\Menu.cs" />
     <Compile Include="Services\SensorVaulteManager.cs" />
+    <Compile Include="Agents\SquadLeader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

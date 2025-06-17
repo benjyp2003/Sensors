@@ -13,6 +13,9 @@ namespace Sensors
         /// Agents rank 2 - 5, Where 5 is the highest rank and 2 is the lowest.
         /// </summary>
         public Rank Rank { get; set; }
+
+        protected int AttackCounter;
+
         protected abstract ISensor[] SensitiveSensors { get; set; }
         protected abstract ISensor[] SensorSlots { get; set; }
         
@@ -22,6 +25,7 @@ namespace Sensors
         protected Agent()
         {
             Prison.Instance.AddAgentToList(this);
+            AttackCounter = 0;
         }
 
         /// <summary>
@@ -31,6 +35,15 @@ namespace Sensors
         /// <param name="sensor"></param>
         public virtual void TryMatchingSensor(ISensor sensor)
         {
+            AttackCounter++;
+            if (AttackCounter >= 10)
+            {
+                Console.WriteLine("You reached 10 attacks! \n");
+                ClearAllSensetiveSensors();
+                ClearAllSensorsSlot();
+                return;
+            }
+
             // Check if all slots are filled
             if (successfulMatches >= SensitiveSensors.Length)
             {
@@ -70,10 +83,42 @@ namespace Sensors
             Console.WriteLine($"Sensor {sensor.Name} did not match or its slot is already filled. \n");
         }
 
-        // Activates the sensor
+        /// <summary>
+        /// Activates the sensor
+        /// </summary>
+        /// <param name="sensor"></param>
         protected virtual void ActivateSensor(ISensor sensor)
         {
             sensor.Activate();
         }
+
+        /// <summary>
+        /// Remove a givin amount of random sensors.
+        /// </summary>
+        /// <param name="num"></param>
+        protected virtual void RemoveRandomSensors(int num)
+        {
+            Random random = new Random();
+            for (int i = 0; i < num; i++)
+            {
+                int rand = random.Next(SensorSlots.Length);
+                ISensor sensorToDelete = SensorSlots[rand];
+                Console.WriteLine($"Removing sensor '{sensorToDelete.Name}'.. \n");
+                SensorSlots[rand] = null;
+            }
+        }
+
+        protected virtual void ClearAllSensetiveSensors()
+        {
+            Array.Clear(SensitiveSensors, 0, SensitiveSensors.Length);
+            Console.WriteLine("Cleard the SensitiveSensors array.");
+        }
+
+        protected virtual void ClearAllSensorsSlot()
+        {
+            Array.Clear(SensorSlots, 0, SensorSlots.Length);
+            Console.WriteLine("Cleard the SensorsSlot array.");
+        }
+
     }
 }
