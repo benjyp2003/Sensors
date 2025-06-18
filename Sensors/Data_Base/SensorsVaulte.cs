@@ -68,8 +68,35 @@ namespace Sensors
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex} in SensorVault.GetRandomSensors");
+                Console.WriteLine($"Error: {ex} in SensorVault.GetRandomSensorsType");
                 return new List<ISensor>();
+            }
+        }
+        
+        public static List<Type> GetRandomSensorsType(int count)
+        {
+            try
+            {
+                if (Sensors == null || Sensors.Count == 0)
+                {
+                    Console.WriteLine("Error: Sensors list is empty or null. \n");
+                    return new List<Type>();
+                }
+
+                Random random = new Random();
+                List<Type> newSensors = new List<Type>();
+
+                for (int i = 0; i < count; i++)
+                {
+                    newSensors.Add(Sensors[random.Next(Sensors.Count)].GetType());
+                }
+
+                return newSensors;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex} in SensorVault.GetRandomSensorsType");
+                return new List<Type>();
             }
         }
 

@@ -126,7 +126,7 @@ namespace Sensors
         static bool CheckIfNotAllFootSoldiersExposed(Agent agent)
         {
             Type type = agent.GetType();
-            return (type.Name != "FootSoldier" && Prison.Instance.GetAllAgentTypes().Any(t => t.Name != "FootSoldier"));
+            return (type.Name != "FootSoldier" && Prison.Instance.GetAllAgentTypes().Any(t => t.Name == "FootSoldier"));
         }
 
         static char ExitOption()

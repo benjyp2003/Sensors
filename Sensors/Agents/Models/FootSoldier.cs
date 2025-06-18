@@ -9,7 +9,7 @@ namespace Agents.Models
 {
     internal class FootSoldier : Agent
     {
-        protected override ISensor[] SensitiveSensors { get; set; } 
+        protected override Type[] SensitiveSensors { get; set; } 
         protected override ISensor[] SensorSlots { get; set; }
 
         public FootSoldier(string name, string affiliation) : base()
@@ -19,11 +19,11 @@ namespace Agents.Models
             Affiliation = affiliation;
             
             // Initialize arrays
-            SensitiveSensors = new ISensor[2];
+            SensitiveSensors = new Type[2];
             SensorSlots = new ISensor[2];
             
             // Get random sensors
-            var randomSensors = SensorsVaulte.GetRandomSensors(2);
+            var randomSensors = SensorsVaulte.GetRandomSensorsType(2);
             if (randomSensors.Count > 0)
             {
                 for (int i = 0; i < Math.Min(randomSensors.Count, 2); i++)

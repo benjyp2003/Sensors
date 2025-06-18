@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,20 +11,15 @@ namespace Sensors
     internal abstract class Agent 
     {
         public string Name { get; set; }
-
-        /// <summary>
-        /// Agents rank 2 - 5, Where 5 is the highest rank and 2 is the lowest.
-        /// </summary>
         public Rank Rank { get; set; }
-
         public string Affiliation { get; set; }
 
         protected int AttackCounter {  get; set; }
         protected int SpecialAttackCounter {  get; set; }
 
-        protected abstract ISensor[] SensitiveSensors { get; set; }
+        protected abstract Type[] SensitiveSensors { get; set; }
         protected abstract ISensor[] SensorSlots { get; set; }
-        
+
 
         protected int successfulMatches = 0;
         public bool IsExposed => successfulMatches >= SensitiveSensors.Length;
@@ -53,27 +49,18 @@ namespace Sensors
 
             AttackCounter++;
 
-            if (AttackCounter % 10 == 0)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("You reached 10 attacks! \n");
-                ResetAllSensetiveSensors();
-                ClearAllSensorsSlot();
-                Console.ResetColor();
-                return;
-            }
+            // check if you tried 10 times
+            if ( CheckAttackCounter()) { return; }
 
             // Check if all slots are filled
-            if (successfulMatches >= SensitiveSensors.Length)
-            {
-                Console.WriteLine("All sensor slots are already filled. \n");
-                return;
-            }
+            if (CheckIfSlotsAreFull()) { return; }
             
+
             // Check each SensitiveSensor
             for (int i = 0; i < SensitiveSensors.Length; i++)
             {
-                if (SensitiveSensors[i] != null && SensitiveSensors[i].Name == sensor.Name)
+                // check if the type in the sensitive arr matches the givin sensor type
+                if (SensitiveSensors[i] != null && SensitiveSensors[i].Name == sensor.GetType().Name)
                 {
                     // Check if the slot is not already filled
                     if (SensorSlots[i] == null)
@@ -99,9 +86,10 @@ namespace Sensors
                     }
                 }
             }
+
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine();
-            Console.WriteLine($"The Sensor '{sensor.Name}' did not match or its slot is already filled, Please try again.\n");
+            Console.WriteLine($"The Sensor '{sensor.Name}' did not match, Please try again.\n");
             Console.ResetColor();
 
         }
@@ -115,6 +103,31 @@ namespace Sensors
         {
             sensor.Activate();
             SpecialSensorActions(sensor);
+        }
+
+
+        protected bool CheckAttackCounter()
+        {
+            if (AttackCounter % 10 == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("You reached 10 attacks! \n");
+                ResetAllSensetiveSensors();
+                ClearAllSensorsSlot();
+                Console.ResetColor();
+                return true;
+            }
+            return false;
+        }
+
+        protected bool CheckIfSlotsAreFull()
+        {
+            if (successfulMatches >= SensitiveSensors.Length)
+            {
+                Console.WriteLine("All sensor slots are already filled. \n");
+                return true;
+            }
+            return false;
         }
 
 
@@ -148,11 +161,24 @@ namespace Sensors
 
         void ShowSensitiveSensor()
         {
-            Random random = new Random();
-            int randomIndex = random.Next(0, SensitiveSensors.Length);
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine($"Thermal sensor revealed the sensitive sensor - '{SensitiveSensors[randomIndex].Name}' \n");
-            Console.ResetColor();
+            try
+            {
+                while (true)
+                {
+                    Random random = new Random();
+                    int randomIndex = random.Next(0, SensitiveSensors.Length);
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Type type = SensitiveSensors[randomIndex];
+                    if (type != null)
+                    {
+                        Console.WriteLine($"Thermal sensor revealed the sensitive sensor - '{type.Name}' \n");
+                        Console.ResetColor();
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            { Console.WriteLine($"Couldent get random sensitive sensors: {ex}"); }
         }
 
         void ShowInfo(int numberOfFieldsToShow)
@@ -226,7 +252,7 @@ namespace Sensors
         protected virtual void ResetAllSensetiveSensors()
         {
             Array.Clear(SensitiveSensors, 0, SensitiveSensors.Length);
-            SensitiveSensors = SensorsVaulte.GetRandomSensors(2).ToArray();
+            SensitiveSensors = SensorsVaulte.GetRandomSensorsType(2).ToArray();
 
             Console.WriteLine("Reseted the SensitiveSensors array. \n");
         }

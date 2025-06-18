@@ -9,7 +9,7 @@ namespace Agents.Models
 {
     internal class OrganizationLeader : Agent
     {
-        protected override ISensor[] SensitiveSensors { get; set; }
+        protected override Type[] SensitiveSensors { get; set; }
         protected override ISensor[] SensorSlots { get; set; }
 
         public OrganizationLeader(string name, string affiliation) : base()
@@ -20,14 +20,14 @@ namespace Agents.Models
             AttackCounter = 0;
 
             // Initialize arrays
-            SensitiveSensors = new ISensor[8];
+            SensitiveSensors = new Type[8];
             SensorSlots = new ISensor[8];
 
             // Get random sensors
-            var randomSensors = SensorsVaulte.GetRandomSensors(4);
+            var randomSensors = SensorsVaulte.GetRandomSensorsType(8);
             if (randomSensors.Count > 0)
             {
-                for (int i = 0; i < Math.Min(randomSensors.Count, 4); i++)
+                for (int i = 0; i < Math.Min(randomSensors.Count, 8); i++)
                 {
                     SensitiveSensors[i] = randomSensors[i];
                 }
@@ -44,37 +44,30 @@ namespace Agents.Models
             AttackCounter++;
             SpecialAttackCounter++;
 
-            if (AttackCounter % 10 == 0)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("You reached 10 attacks! \n");
-                ResetAllSensetiveSensors();
-                ClearAllSensorsSlot();
-                Console.ResetColor();
-                return;
-            }
-
             if (SpecialAttackCounter == 3)
             {
                 RemoveFirstSensorFromSlot();
                 SpecialAttackCounter = 0;
             }
 
+            // check if you tried 10 times
+            if (CheckAttackCounter()) { return; }
+
             // Check if all slots are filled
-            if (successfulMatches >= SensitiveSensors.Length)
-            {
-                Console.WriteLine("All sensor slots are already filled. \n");
-                return;
-            }
+            if (CheckIfSlotsAreFull()) { return; }
+            
 
             // Check each SensitiveSensor
             for (int i = 0; i < SensitiveSensors.Length; i++)
             {
-                if (SensitiveSensors[i] != null && SensitiveSensors[i].Name == sensor.Name)
+                // check if the type in the sensitive arr matches the givin sensor type
+                if (SensitiveSensors[i] != null && SensitiveSensors[i].Name == sensor.GetType().Name)
                 {
                     // Check if the slot is not already filled
                     if (SensorSlots[i] == null)
                     {
+                        AttackCounter--;  // if you guess right the sensitive sensor it wont count as a turn (for the main attack count).
+
                         Console.ForegroundColor = ConsoleColor.Green;
                         SensorSlots[i] = sensor;
                         successfulMatches++;
@@ -113,7 +106,7 @@ namespace Agents.Models
         protected override void ResetAllSensetiveSensors()
         {
             Array.Clear(SensitiveSensors, 0, SensitiveSensors.Length);
-            SensitiveSensors = SensorsVaulte.GetRandomSensors(8).ToArray();
+            SensitiveSensors = SensorsVaulte.GetRandomSensorsType(8).ToArray();
             Console.WriteLine("Reseted the SensitiveSensors array. \n");
         }
     }

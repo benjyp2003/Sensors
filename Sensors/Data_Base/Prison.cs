@@ -40,12 +40,12 @@ namespace Sensors
             _allNonExposedAgents.Add(agent);
         }
 
-
         public void AddAgentToExposedList(Agent agent)
         {
             DeleteAgentFromList(agent);
             _exposedAgents.Add(agent);
         }
+
 
         /// <summary>
         /// Gets a given amount of random agents from the agents list.
