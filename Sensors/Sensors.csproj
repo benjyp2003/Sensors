@@ -44,24 +44,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agents\Models\FootSoldier.cs" />
-    <Compile Include="Agents\Agent.cs" />
-    <Compile Include="General\Factory.cs" />
+    <Compile Include="Base_classes\Agent.cs" />
     <Compile Include="Sensors\Models\LightSensor.cs" />
     <Compile Include="Sensors\Models\MagneticSensor.cs" />
     <Compile Include="Sensors\Models\MotionSensor.cs" />
     <Compile Include="Agents\Models\OrganizationLeader.cs" />
-    <Compile Include="Agents\Prison.cs" />
+    <Compile Include="Data_Base\Prison.cs" />
     <Compile Include="Agents\Models\SeniorCommander.cs" />
     <Compile Include="Sensors\Models\SignalSensor.cs" />
     <Compile Include="Sensors\Models\PulseSensor.cs" />
     <Compile Include="Sensors\Models\ThermalSensor.cs" />
     <Compile Include="Services\InvestigationManager.cs" />
-    <Compile Include="Sensors\ISensor.cs" />
+    <Compile Include="Base_classes\ISensor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sensors\Models\AudioSensor.cs" />
-    <Compile Include="General\Rank.cs" />
-    <Compile Include="Sensors\SensorsVaulte.cs" />
+    <Compile Include="Agents\Rank.cs" />
+    <Compile Include="Data_Base\SensorsVaulte.cs" />
     <Compile Include="Services\Menu.cs" />
     <Compile Include="Services\SensorVaulteManager.cs" />
     <Compile Include="Agents\Models\SquadLeader.cs" />

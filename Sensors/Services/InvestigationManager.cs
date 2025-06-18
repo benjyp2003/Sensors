@@ -26,9 +26,9 @@ namespace Sensors
 
             // Initialize some agents
             FootSoldier footAgent1 = new FootSoldier("Yosuf", "Iran");
-            FootSoldier footAgent2 = new FootSoldier("Natzer", "Hamas");
             SquadLeader squadLeader1 = new SquadLeader("Ahmed", "Hamas");
             SeniorCommander seniorCommander1 = new SeniorCommander("Abdul", "Hizzballa");
+            OrganizationLeader organizationLeader1 = new OrganizationLeader("Muhamad", "Hamas");
 
             HandleMenuChoice();
         }
@@ -40,7 +40,7 @@ namespace Sensors
                 Console.Clear();
                 Menu.ShowMenu();
                 Console.WriteLine("Enter your choice: ");
-                string choice = Console.ReadLine();
+                string choice = Console.ReadLine().Trim();
                 switch (choice)
                 {
                     case "1":
@@ -69,30 +69,64 @@ namespace Sensors
 
         static void MatchSensors()
         {
-            Prison.Instance.ShowAllAgents();
-            Console.WriteLine("Enter the agent name you want to investigate: ");
-            string agentName = Console.ReadLine();
-            Agent agent = Prison.Instance.GetAgentByName(agentName);
-            if (agent == null)
+            Agent agent;
+            while (true)
             {
-                Console.WriteLine("Agent not found!");
-                return;
+
+                Prison.Instance.ShowAllNotExposedAgents();
+                Console.WriteLine("Enter the agent name you want to investigate: ");
+                string agentName = Console.ReadLine().Trim();
+                agent = Prison.Instance.GetAgentByName(agentName);
+
+                if (agent == null)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Agent not found!");
+                    Console.ResetColor();
+                    return;
+                }
+
+                if (CheckIfNotAllFootSoldiersExposed(agent))
+                {
+                    Console.ForegroundColor= ConsoleColor.DarkRed;
+                    Console.WriteLine($"\nYou cant investigate a high rank agent before you exposed the Foot Soldiers! \n");
+                    Console.ResetColor();
+                }
+                else
+                { break; }
             }
+
+            // Runs Until you matched all the sensores and the agent is exposed.
             while (!agent.IsExposed)
             {
                 ShowAllSensors();
-                Console.WriteLine("Choose the sensor you want to match: (Enter the sensors name)");
-                string name = Console.ReadLine();
-                Console.WriteLine();
-                ISensor sensor = GetSensorByName(name);
-                if (sensor == null)
+                Console.Write("Choose the sensor to match (enter number): ");
+                var input = Console.ReadLine().Trim();
+
+                if (!int.TryParse(input, out int choice) ||
+                    choice < 1 || choice > GetAllSensors().Count)
                 {
-                    Console.WriteLine("Sensor not found!");
+                    Console.WriteLine("Invalid choice – please enter a valid number.\n");
                     continue;
                 }
 
+                ISensor sensor = GetAllSensors()[choice - 1];
                 agent.TryMatchingSensor(sensor);
             }
+            Prison.Instance.AddAgentToExposedList(agent);
+
+        }
+
+
+        /// <summary>
+        /// Returns true if the agent is a high rank , and there are still foot soldiers to expose.
+        /// </summary>
+        /// <param name="agent"></param>
+        /// <returns></returns>
+        static bool CheckIfNotAllFootSoldiersExposed(Agent agent)
+        {
+            Type type = agent.GetType();
+            return (type.Name != "FootSoldier" && Prison.Instance.GetAllAgentTypes().Any(t => t.Name != "FootSoldier"));
         }
 
         static char ExitOption()

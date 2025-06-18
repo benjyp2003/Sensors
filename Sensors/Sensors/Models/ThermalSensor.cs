@@ -26,7 +26,7 @@ namespace Sensors.Sensors
         public void AddToVaulte()
         {
             SensorsVaulte.AddSensorToList(this);
-            Console.WriteLine($"Added sensor '{Name}' to the vault. \n");
+            Console.WriteLine($"Successfully Added sensor '{Name}' to the vault. \n");
         }
     }
 }

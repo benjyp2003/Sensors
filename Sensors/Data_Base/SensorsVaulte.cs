@@ -23,6 +23,7 @@ namespace Sensors
         /// <param name="sensor"></param>
         public static void AddSensorToList(ISensor sensor)
         {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             if (sensor == null)
             {
                 Console.WriteLine("Error: Cannot add null sensor to the vault.");
@@ -34,9 +35,9 @@ namespace Sensors
                 Console.WriteLine($"Error: A sensor with name '{sensor.Name}' already exists in the vault.");
                 return;
             }
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Sensors.Add(sensor);
-            Console.WriteLine($"Successfully added sensor '{sensor.Name}' to the vault.");
+
         }
 
 
@@ -93,9 +94,11 @@ namespace Sensors
         public static void ShowAllSensors()
         {
             Console.WriteLine("\nThe available Sensors are: ");
+            int count = 1;
             foreach (var sensor in Sensors)
             {
-                Console.WriteLine($"'{sensor.Name}' of type {sensor.GetType().Name}");
+                Console.WriteLine($"{count} - '{sensor.Name}' of type {sensor.GetType().Name}");
+                count++;
             }
             Console.WriteLine();
         }
@@ -123,7 +126,7 @@ namespace Sensors
         {
             if (Sensors.Remove(sensor)) 
             {
-                Console.WriteLine($"{sensor} was removed successfully from the Sensor List. \n");
+                Console.WriteLine($"{sensor} was removed successfully from the Sensor Vaulte. \n");
             }
             else
             {

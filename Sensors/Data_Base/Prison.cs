@@ -13,11 +13,13 @@ namespace Sensors
     internal class Prison 
     {
         static Prison _instance;
-        List<Agent> _allAgents;
+        List<Agent> _allNonExposedAgents;
+        List<Agent> _exposedAgents;
 
         Prison()
         {
-            _allAgents = new List<Agent>();
+            _allNonExposedAgents = new List<Agent>();
+            _exposedAgents = new List<Agent>();
         }
 
         public static Prison Instance
@@ -32,13 +34,17 @@ namespace Sensors
             }
         }
 
-        /// <summary>
-        /// Adds an agent to the agents list.
-        /// </summary>
-        /// <param name="agent"></param>
+       
         public void AddAgentToList(Agent agent)
         {
-            _allAgents.Add(agent);
+            _allNonExposedAgents.Add(agent);
+        }
+
+
+        public void AddAgentToExposedList(Agent agent)
+        {
+            DeleteAgentFromList(agent);
+            _exposedAgents.Add(agent);
         }
 
         /// <summary>
@@ -50,7 +56,7 @@ namespace Sensors
         {
             try
             {
-                if (_allAgents == null || _allAgents.Count == 0)
+                if (_allNonExposedAgents == null || _allNonExposedAgents.Count == 0)
                 {
                     Console.WriteLine("Error: Agents list is empty or null. \n");
                     return new List<Agent>();
@@ -61,7 +67,7 @@ namespace Sensors
 
                 for (int i = 0; i < count; i++)
                 {
-                    newAgents.Add(_allAgents[random.Next(_allAgents.Count)]);
+                    newAgents.Add(_allNonExposedAgents[random.Next(_allNonExposedAgents.Count)]);
                 }
 
                 return newAgents;
@@ -80,7 +86,7 @@ namespace Sensors
         /// <returns></returns>
         public Agent GetAgentByName(string name)
         {
-            foreach (Agent agent in _allAgents)
+            foreach (Agent agent in _allNonExposedAgents)
             {
                 if (agent.Name == name)
                 {
@@ -93,12 +99,12 @@ namespace Sensors
         /// <summary>
         /// Shows all the available agents.
         /// </summary>
-        public void ShowAllAgents()
+        public void ShowAllNotExposedAgents()
         {
-            Console.WriteLine("The available Agents for investigation are: ");
-            foreach (var agent in _allAgents)
+            Console.WriteLine("\nThe available Agents for investigation are: ");
+            foreach (var agent in _allNonExposedAgents)
             {
-                Console.WriteLine($"Aent '{agent.Name}'  Affiliated with {agent.Affiliation}, rank {agent.Rank}");
+                Console.WriteLine($"- Aent '{agent.Name}'  Affiliated with {agent.Affiliation}, rank {agent.Rank}");
             }
             Console.WriteLine();
         }
@@ -110,9 +116,9 @@ namespace Sensors
         public HashSet<Type> GetAllAgentTypes()
         {
             HashSet<Type> typesOfAgents = new HashSet<Type>();
-            for (int i = 0; i < _allAgents.Count; i++)
+            for (int i = 0; i < _allNonExposedAgents.Count; i++)
             {
-                typesOfAgents.Add(_allAgents[i].GetType());
+                typesOfAgents.Add(_allNonExposedAgents[i].GetType());
             }
 
             return typesOfAgents;
@@ -122,21 +128,21 @@ namespace Sensors
         /// Deletes a given agent from the list.
         /// </summary>
         /// <param name="agent"></param>
-        public void DeleteAgent(Agent agent)
+        public void DeleteAgentFromList(Agent agent)
         {
-            if (_allAgents.Remove(agent))
+            if (_allNonExposedAgents.Remove(agent))
             {
-                Console.WriteLine($"{agent.Name} was removed successfully");
+                Console.WriteLine($"{agent.Name} was removed successfully from the Non exposed list. \n");
             }
             else
             {
-                Console.WriteLine($"{agent.Name} not found in list.");
+                Console.WriteLine($"{agent.Name} not found in list. \n");
             }
         }
 
         public void ClearList()
         {
-            _allAgents.Clear();
+            _allNonExposedAgents.Clear();
         }
     }
 }

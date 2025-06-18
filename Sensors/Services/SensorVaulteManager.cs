@@ -66,7 +66,7 @@ namespace Sensors
             Console.WriteLine("Sensor types: ");
             for (int i = 0; i < typesOfSensors.Length; i++)
             {
-                Console.WriteLine($"{i+1}: {typesOfSensors[i]}");
+                Console.WriteLine($"{i+1}: {typesOfSensors[i].Name}");
             }
         }
 

@@ -42,18 +42,21 @@ namespace Agents.Models
         public override void TryMatchingSensor(ISensor sensor)
         {
             AttackCounter++;
-            if (AttackCounter >= 10)
+            SpecialAttackCounter++;
+
+            if (AttackCounter % 10 == 0)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("You reached 10 attacks! \n");
                 ResetAllSensetiveSensors();
                 ClearAllSensorsSlot();
-                ResetAttackCount();
+                Console.ResetColor();
                 return;
             }
-            if (AttackCounter == 3)
+            if (SpecialAttackCounter == 3)
             {
                 RemoveRandomSensors(1);
-                ResetAttackCount();
+                SpecialAttackCounter = 0;
             }
 
             // Check if all slots are filled
@@ -71,6 +74,7 @@ namespace Agents.Models
                     // Check if the slot is not already filled
                     if (SensorSlots[i] == null)
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         SensorSlots[i] = sensor;
                         successfulMatches++;
                         Console.WriteLine($"\nSensor {sensor.Name} matched and placed in slot {i}. \n");
@@ -86,13 +90,14 @@ namespace Agents.Models
                         {
                             Console.WriteLine($"{successfulMatches}/{SensitiveSensors.Length} found, Agent Exposed! \n");
                         }
-
+                        Console.ResetColor();
                         return;
                     }
                 }
             }
-
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Sensor {sensor.Name} did not match or its slot is already filled. \n");
+            Console.ResetColor();
         }
 
         protected override void ResetAllSensetiveSensors()

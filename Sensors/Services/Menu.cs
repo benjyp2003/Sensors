@@ -10,6 +10,7 @@ namespace Sensors
     {
         public static void ShowMenu()
         {
+            Console.ResetColor();
             Console.WriteLine("┌──────────────────────────────────────────────┐");
             Console.WriteLine("│              Investigation Menu              │");
             Console.WriteLine("├──────────────────────────────────────────────┤");
@@ -21,6 +22,7 @@ namespace Sensors
 
         public static void ShowVaulteMenu()
         {
+            Console.ResetColor();
             Console.WriteLine("┌──────────────────────────────────────────────┐");
             Console.WriteLine("│              Sensor Vault Menu               │");
             Console.WriteLine("├──────────────────────────────────────────────┤");

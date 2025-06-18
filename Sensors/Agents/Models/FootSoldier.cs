@@ -34,7 +34,9 @@ namespace Agents.Models
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine($"Warning: No sensors available for {name}. Agent will have no sensitive sensors.");
+                Console.ResetColor();
             }
         }
 

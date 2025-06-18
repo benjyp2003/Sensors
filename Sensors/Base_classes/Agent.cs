@@ -10,6 +10,7 @@ namespace Sensors
     internal abstract class Agent 
     {
         public string Name { get; set; }
+
         /// <summary>
         /// Agents rank 2 - 5, Where 5 is the highest rank and 2 is the lowest.
         /// </summary>
@@ -18,18 +19,24 @@ namespace Sensors
         public string Affiliation { get; set; }
 
         protected int AttackCounter {  get; set; }
+        protected int SpecialAttackCounter {  get; set; }
 
         protected abstract ISensor[] SensitiveSensors { get; set; }
         protected abstract ISensor[] SensorSlots { get; set; }
         
+
         protected int successfulMatches = 0;
         public bool IsExposed => successfulMatches >= SensitiveSensors.Length;
+
+
 
         protected Agent()
         {
             Prison.Instance.AddAgentToList(this);
             AttackCounter = 0;
+            SpecialAttackCounter = 0;
         }
+
 
         /// <summary>
         /// Gets a sensor and trys to match it to the SensitiveSensors array.
@@ -45,11 +52,14 @@ namespace Sensors
             }
 
             AttackCounter++;
-            if (AttackCounter >= 10)
+
+            if (AttackCounter % 10 == 0)
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("You reached 10 attacks! \n");
                 ResetAllSensetiveSensors();
                 ClearAllSensorsSlot();
+                Console.ResetColor();
                 return;
             }
 
@@ -68,6 +78,7 @@ namespace Sensors
                     // Check if the slot is not already filled
                     if (SensorSlots[i] == null)
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         SensorSlots[i] = sensor;
                         successfulMatches++;
                         Console.WriteLine($"\nSensor {sensor.Name} matched and placed in slot {i}. \n");
@@ -83,13 +94,18 @@ namespace Sensors
                         {
                             Console.WriteLine($"{successfulMatches}/{SensitiveSensors.Length} found, Agent Exposed! \n");
                         }
+                        Console.ResetColor();
                         return;
                     }
                 }
             }
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine();
-            Console.WriteLine($"Sensor {sensor.Name} did not match or its slot is already filled. \n");
+            Console.WriteLine($"The Sensor '{sensor.Name}' did not match or its slot is already filled, Please try again.\n");
+            Console.ResetColor();
+
         }
+
 
         /// <summary>
         /// Activates the sensor
@@ -100,6 +116,7 @@ namespace Sensors
             sensor.Activate();
             SpecialSensorActions(sensor);
         }
+
 
         /// <summary>
         /// Checks if the givin sensor is a special type sensor.
@@ -114,7 +131,7 @@ namespace Sensors
                     break;
 
                 case "MagneticSensor":
-                    AttackCounter -= 6;
+                    SpecialAttackCounter = -6;
                     break;
 
                 case "SignalSensor":
@@ -128,11 +145,14 @@ namespace Sensors
             }
         }
 
+
         void ShowSensitiveSensor()
         {
             Random random = new Random();
             int randomIndex = random.Next(0, SensitiveSensors.Length);
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($"Thermal sensor revealed the sensitive sensor - '{SensitiveSensors[randomIndex].Name}' \n");
+            Console.ResetColor();
         }
 
         void ShowInfo(int numberOfFieldsToShow)
@@ -140,13 +160,17 @@ namespace Sensors
             switch (numberOfFieldsToShow)
             {
                 case 1:
-                    Console.WriteLine($"Signal Sensor revealed agents Rank '{this.Rank}'");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine($"Signal Sensor revealed agents Rank '{this.Rank}' \n");
+                    Console.ResetColor();
                     break;
 
                 case 2:
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.WriteLine($"Light Sensor revealed Agents - \n" +
                                       $"Rank: '{this.Rank}' \n" +
-                                      $"Affiliation: '{this.Affiliation}'");
+                                      $"Affiliation: '{this.Affiliation}' \n");
+                    Console.ResetColor();
                     break;
             }
         }
@@ -161,6 +185,7 @@ namespace Sensors
             {
                 Random random = new Random();
                 List<int> nonNullIndexes = new List<int>();
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine($"You tried 3 Times, Removing {num} random Sensor");
 
                 for (int i = 0; i < SensorSlots.Length; i++)
@@ -179,7 +204,7 @@ namespace Sensors
                     int slotIndex = nonNullIndexes[rand];
                     ISensor sensorToDelete = SensorSlots[slotIndex];
 
-                    Console.WriteLine($"Removing sensor '{sensorToDelete.Name}'..\n");
+                    Console.WriteLine($"Removing sensor '{sensorToDelete.Name}' of Type {sensorToDelete.GetType().Name} ..\n");
                     SensorSlots[slotIndex] = null; 
                     successfulMatches--;
 
@@ -191,6 +216,8 @@ namespace Sensors
                         break; 
                     }
                 }
+                Console.ResetColor();
+
             }
             catch (Exception ex)
             { Console.WriteLine($"{ex}"); }
@@ -200,6 +227,7 @@ namespace Sensors
         {
             Array.Clear(SensitiveSensors, 0, SensitiveSensors.Length);
             SensitiveSensors = SensorsVaulte.GetRandomSensors(2).ToArray();
+
             Console.WriteLine("Reseted the SensitiveSensors array. \n");
         }
 
@@ -210,10 +238,6 @@ namespace Sensors
             successfulMatches = 0;
         }
 
-        protected void ResetAttackCount()
-        {
-            AttackCounter = 0;
-        }
 
     }
 }
