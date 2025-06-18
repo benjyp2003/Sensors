@@ -104,7 +104,7 @@ namespace Sensors
             Console.WriteLine("\nThe available Agents for investigation are: ");
             foreach (var agent in _allNonExposedAgents)
             {
-                Console.WriteLine($"- Aent '{agent.Name}'  Affiliated with {agent.Affiliation}, rank {agent.Rank}");
+                Console.WriteLine($"- Aent '{agent.Name}' ");
             }
             Console.WriteLine();
         }
